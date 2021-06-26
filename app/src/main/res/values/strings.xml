@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Qur\'an App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tabs_surah">Surah</string>
+    <string name="tabs_bookmark">Bookmark</string>
+    <string name="tabs_doa">Doa Harian</string>
+</resources>
