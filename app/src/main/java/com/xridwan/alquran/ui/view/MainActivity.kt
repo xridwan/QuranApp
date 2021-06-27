@@ -167,8 +167,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.option_doa) {
-            startActivity(Intent(this, DoaActivity::class.java))
+        when (item.itemId) {
+            R.id.option_doa -> {
+                startActivity(Intent(this, DoaActivity::class.java))
+            }
+            R.id.option_reset -> {
+                val historyPreference = HistoryPreference(this)
+                historyPreference.setHistory(
+                    Surah(
+                        0,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    )
+                )
+                getHistory()
+
+                Toast.makeText(this, "Berhasil Dibersihkan", Toast.LENGTH_SHORT).show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

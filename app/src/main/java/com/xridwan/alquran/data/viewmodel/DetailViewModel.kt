@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel() : ViewModel() {
+class DetailViewModel : ViewModel() {
     private val detail = MutableLiveData<Resource<SurahResponse>>()
 
     fun setDetail(nomor: String) {

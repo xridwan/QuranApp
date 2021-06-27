@@ -85,7 +85,7 @@ class DetailActivity : AppCompatActivity() {
 
                 Log.e(TAG, "onCreate: $intPosition")
 
-                Toast.makeText(this@DetailActivity, "Memuat", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@DetailActivity, "Berhasil Memuat", Toast.LENGTH_SHORT).show()
             }, 2000L)
 
             rvAyat.addOnScrollListener(object : RecyclerView.OnScrollListener() {

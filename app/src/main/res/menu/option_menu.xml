@@ -14,7 +14,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/option_reset"
+        android:title="Bersihkan Riwayat"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/option_about"
-        android:title="About App"
+        android:title="Tentang Aplikasi"
         app:showAsAction="never" />
 </menu>

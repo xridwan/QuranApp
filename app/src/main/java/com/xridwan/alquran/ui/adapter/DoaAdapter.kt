@@ -3,6 +3,7 @@ package com.xridwan.alquran.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +46,9 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
     }
 
     override fun onBindViewHolder(holder: DoaViewHolder, position: Int) {
+        val animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, android.R.anim.slide_in_left)
+        holder.itemView.animation = animation
         holder.bind(filterList[position])
     }
 
