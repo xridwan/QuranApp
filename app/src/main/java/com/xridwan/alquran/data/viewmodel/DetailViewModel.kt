@@ -2,7 +2,6 @@ package com.xridwan.alquran.data.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.xridwan.alquran.data.source.remote.network.ApiClient
 import com.xridwan.alquran.data.source.remote.response.SurahResponse
