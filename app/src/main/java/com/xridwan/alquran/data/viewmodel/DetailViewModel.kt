@@ -11,24 +11,24 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel : ViewModel() {
-    private val detail = MutableLiveData<Resource<SurahResponse>>()
+    private val ayatData = MutableLiveData<Resource<SurahResponse>>()
 
     fun setDetail(nomor: String) {
-        detail.postValue(Resource.loading(null))
+        ayatData.postValue(Resource.loading(null))
         ApiClient.getRetrofit().getAyat(nomor).enqueue(object : Callback<SurahResponse> {
             override fun onResponse(call: Call<SurahResponse>, response: Response<SurahResponse>) {
                 if (response.isSuccessful) {
-                    detail.postValue(Resource.success(response.body()))
+                    ayatData.postValue(Resource.success(response.body()))
                 } else {
-                    detail.postValue(Resource.error(null, response.message()))
+                    ayatData.postValue(Resource.error(null, response.message()))
                 }
             }
 
             override fun onFailure(call: Call<SurahResponse>, t: Throwable) {
-                detail.postValue(Resource.error(null, t.localizedMessage))
+                ayatData.postValue(Resource.error(null, t.localizedMessage))
             }
         })
     }
 
-    fun getDetail(): LiveData<Resource<SurahResponse>> = detail
+    fun getDetail(): LiveData<Resource<SurahResponse>> = ayatData
 }

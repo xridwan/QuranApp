@@ -28,7 +28,7 @@ class DoaActivity : AppCompatActivity() {
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Do'a Harian"
+            title = getString(R.string.title_doa)
             elevation = 0.0f
         }
 
@@ -81,7 +81,7 @@ class DoaActivity : AppCompatActivity() {
         val searchView = menu?.findItem(R.id.option_search)?.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.queryHint = "Pencarian"
+        searchView.queryHint = getString(R.string.label_search)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return true

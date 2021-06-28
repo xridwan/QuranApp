@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Qur\'an App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tabs_surah">Surah</string>
-    <string name="tabs_bookmark">Bookmark</string>
-    <string name="tabs_doa">Doa Harian</string>
+    <string name="title_doa">Do\'a Harian</string>
+    <string name="label_search">Pencarian</string>
+    <string name="dialog_yes">Ya</string>
+    <string name="dialog_cancel">Batal</string>
+    <string name="dialog_message">Bersihkan riwayat baca ?</string>
 </resources>

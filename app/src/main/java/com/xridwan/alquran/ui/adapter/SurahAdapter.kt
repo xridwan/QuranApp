@@ -8,19 +8,19 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.xridwan.alquran.R
-import com.xridwan.alquran.databinding.SurahItemLayoutBinding
 import com.xridwan.alquran.data.source.local.entity.Surah
+import com.xridwan.alquran.databinding.SurahItemLayoutBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filterable {
-    private val surahs = arrayListOf<Surah>()
+    private val surahList = arrayListOf<Surah>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     var filterList = ArrayList<Surah>()
 
     init {
-        filterList = surahs
+        filterList = surahList
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -28,8 +28,8 @@ class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filte
     }
 
     fun setData(list: MutableList<Surah>) {
-        surahs.clear()
-        surahs.addAll(list)
+        surahList.clear()
+        surahList.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -73,10 +73,10 @@ class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filte
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val search = constraint.toString()
                 filterList = if (search.isEmpty()) {
-                    surahs
+                    surahList
                 } else {
                     val results = ArrayList<Surah>()
-                    for (row in surahs) {
+                    for (row in surahList) {
                         if (row.nama?.toLowerCase(Locale.getDefault())
                                 ?.contains(
                                     constraint.toString().toLowerCase(Locale.getDefault())

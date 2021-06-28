@@ -1,5 +1,6 @@
 package com.xridwan.alquran.ui.view
 
+import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         val searchView = menu?.findItem(R.id.option_search)?.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.queryHint = "Pencarian"
+        searchView.queryHint = getString(R.string.label_search)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return true
@@ -168,11 +169,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.option_doa -> {
-                startActivity(Intent(this, DoaActivity::class.java))
-            }
-            R.id.option_reset -> {
-                val historyPreference = HistoryPreference(this)
+            R.id.option_doa -> startActivity(Intent(this, DoaActivity::class.java))
+            R.id.option_reset -> resetDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun resetDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.apply {
+            setMessage(getString(R.string.dialog_message))
+            setPositiveButton(getString(R.string.dialog_yes)) { _, _ ->
+                val historyPreference = HistoryPreference(this@MainActivity)
                 historyPreference.setHistory(
                     Surah(
                         0,
@@ -189,10 +197,15 @@ class MainActivity : AppCompatActivity() {
                 )
                 getHistory()
 
-                Toast.makeText(this, "Berhasil Dibersihkan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Berhasil Dibersihkan", Toast.LENGTH_SHORT).show()
             }
+            setNegativeButton(getString(R.string.dialog_cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            setCancelable(false)
+            create()
+            show()
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun onLoading(state: Boolean) {

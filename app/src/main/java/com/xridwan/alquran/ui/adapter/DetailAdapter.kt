@@ -10,12 +10,12 @@ import com.xridwan.alquran.data.source.local.entity.Surah
 import com.xridwan.alquran.databinding.AyatItemLayoutBinding
 
 class DetailAdapter : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
-    private val ayats = arrayListOf<Surah>()
+    private val ayatList = arrayListOf<Surah>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setData(list: MutableList<Surah>) {
-        ayats.clear()
-        ayats.addAll(list)
+        ayatList.clear()
+        ayatList.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -47,7 +47,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
         val animation =
             AnimationUtils.loadAnimation(holder.itemView.context, android.R.anim.slide_in_left)
-        holder.bind(ayats[position])
+        holder.bind(ayatList[position])
         holder.itemView.animation = animation
 
         holder.itemView.setOnClickListener {
@@ -55,5 +55,5 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int = ayats.size
+    override fun getItemCount(): Int = ayatList.size
 }

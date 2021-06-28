@@ -11,24 +11,24 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SurahViewModel : ViewModel() {
-    private val surahs = MutableLiveData<Resource<SurahResponse>>()
+    private val surahData = MutableLiveData<Resource<SurahResponse>>()
 
     fun setSurah() {
-        surahs.postValue(Resource.loading(null))
+        surahData.postValue(Resource.loading(null))
         ApiClient.getRetrofit().getSurah().enqueue(object : Callback<SurahResponse> {
             override fun onResponse(call: Call<SurahResponse>, response: Response<SurahResponse>) {
                 if (response.isSuccessful) {
-                    surahs.postValue(Resource.success(response.body()))
+                    surahData.postValue(Resource.success(response.body()))
                 } else {
-                    surahs.postValue(Resource.error(null, response.message()))
+                    surahData.postValue(Resource.error(null, response.message()))
                 }
             }
 
             override fun onFailure(call: Call<SurahResponse>, t: Throwable) {
-                surahs.postValue(Resource.error(null, t.localizedMessage))
+                surahData.postValue(Resource.error(null, t.localizedMessage))
             }
         })
     }
 
-    fun getSurah(): LiveData<Resource<SurahResponse>> = surahs
+    fun getSurah(): LiveData<Resource<SurahResponse>> = surahData
 }

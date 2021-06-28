@@ -14,17 +14,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable {
-    private val doas = arrayListOf<DataItem>()
+    private val doaList = arrayListOf<DataItem>()
 
     var filterList = ArrayList<DataItem>()
 
     init {
-        filterList = doas
+        filterList = doaList
     }
 
     fun setData(list: MutableList<DataItem>) {
-        doas.clear()
-        doas.addAll(list)
+        doaList.clear()
+        doaList.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -59,10 +59,10 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val search = constraint.toString()
                 filterList = if (search.isEmpty()) {
-                    doas
+                    doaList
                 } else {
                     val results = ArrayList<DataItem>()
-                    for (row in doas) {
+                    for (row in doaList) {
                         if (row.title.toLowerCase(Locale.getDefault())
                                 .contains(
                                     constraint.toString().toLowerCase(Locale.getDefault())
