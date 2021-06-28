@@ -178,6 +178,7 @@ class MainActivity : AppCompatActivity() {
     private fun resetDialog() {
         val builder = AlertDialog.Builder(this)
         builder.apply {
+            setTitle(getString(R.string.dialog_title))
             setMessage(getString(R.string.dialog_message))
             setPositiveButton(getString(R.string.dialog_yes)) { _, _ ->
                 val historyPreference = HistoryPreference(this@MainActivity)
@@ -203,7 +204,6 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             setCancelable(false)
-            create()
             show()
         }
     }
