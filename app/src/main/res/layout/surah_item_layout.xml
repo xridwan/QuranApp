@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/line_1"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@drawable/bg_no"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/tv_type"
