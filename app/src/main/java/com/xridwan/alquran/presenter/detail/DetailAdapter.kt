@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.xridwan.alquran.R
-import com.xridwan.alquran.data.source.local.entity.Surah
+import com.xridwan.alquran.data.local.entity.Surah
 import com.xridwan.alquran.databinding.AyatItemLayoutBinding
 
 class DetailAdapter : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {

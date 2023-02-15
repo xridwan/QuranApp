@@ -8,7 +8,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.xridwan.alquran.R
-import com.xridwan.alquran.data.source.local.entity.Surah
+import com.xridwan.alquran.data.local.entity.Surah
 import com.xridwan.alquran.databinding.SurahItemLayoutBinding
 import java.util.*
 import kotlin.collections.ArrayList

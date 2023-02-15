@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.xridwan.alquran.data.source.local.entity.Surah
-import com.xridwan.alquran.data.source.local.preference.HistoryPreference
+import com.xridwan.alquran.data.local.entity.Surah
+import com.xridwan.alquran.data.local.preference.HistoryPreference
 import com.xridwan.alquran.databinding.ActivityDetailBinding
 import com.xridwan.alquran.utils.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -62,7 +62,7 @@ class DetailActivity : AppCompatActivity() {
             tvAyat.text = "${data.ayat} Ayat"
         }
 
-        detailViewModel.setDetail(data.nomor.toString())
+        detailViewModel.getDetail(data.nomor.toString())
         getViewModel()
         recyclerView()
     }
@@ -121,7 +121,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getViewModel() {
-        detailViewModel.getDetail().observe(this) { state ->
+        detailViewModel.ayatData.observe(this) { state ->
             when (state.status) {
                 Resource.Status.SUCCESS -> {
                     onLoading(false)

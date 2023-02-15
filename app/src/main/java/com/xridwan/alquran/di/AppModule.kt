@@ -1,7 +1,8 @@
 package com.xridwan.alquran.di
 
 import androidx.viewbinding.BuildConfig
-import com.xridwan.alquran.data.source.remote.network.WebService
+import com.xridwan.alquran.data.MainRepositoryImpl
+import com.xridwan.alquran.data.remote.network.ApiService
 import com.xridwan.alquran.presenter.detail.DetailViewModel
 import com.xridwan.alquran.presenter.doa.DoaViewModel
 import com.xridwan.alquran.presenter.main.SurahViewModel
@@ -33,8 +34,12 @@ val networkModule = module {
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(WebService::class.java)
+            .create(ApiService::class.java)
     }
+}
+
+val repositoryModule = module {
+    single { MainRepositoryImpl(get()) }
 }
 
 val viewModelModule = module {

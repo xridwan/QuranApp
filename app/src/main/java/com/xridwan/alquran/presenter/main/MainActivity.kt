@@ -11,11 +11,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xridwan.alquran.R
-import com.xridwan.alquran.data.source.local.entity.Surah
-import com.xridwan.alquran.data.source.local.preference.HistoryPreference
+import com.xridwan.alquran.data.local.entity.Surah
+import com.xridwan.alquran.data.local.preference.HistoryPreference
 import com.xridwan.alquran.databinding.ActivityMainBinding
 import com.xridwan.alquran.presenter.detail.DetailActivity
 import com.xridwan.alquran.presenter.doa.DoaActivity
@@ -113,7 +112,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getViewModel() {
-        surahViewModel.getSurah().observe(this) { state ->
+        surahViewModel.getSurah()
+        surahViewModel.surahData.observe(this) { state ->
             when (state.status) {
                 Resource.Status.SUCCESS -> {
                     onLoading(false)
@@ -128,8 +128,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        surahViewModel.setSurah()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -47,7 +47,8 @@ class DoaActivity : AppCompatActivity() {
     }
 
     private fun getViewModel() {
-        doaViewModel.getDoa().observe(this) { state ->
+        doaViewModel.getDoa()
+        doaViewModel.doaData.observe(this) { state ->
             when (state.status) {
                 Resource.Status.SUCCESS -> {
                     onLoading(false)
@@ -62,8 +63,6 @@ class DoaActivity : AppCompatActivity() {
                 }
             }
         }
-
-        doaViewModel.setDoa()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

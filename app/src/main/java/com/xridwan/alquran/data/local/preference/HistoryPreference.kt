@@ -1,7 +1,7 @@
-package com.xridwan.alquran.data.source.local.preference
+package com.xridwan.alquran.data.local.preference
 
 import android.content.Context
-import com.xridwan.alquran.data.source.local.entity.Surah
+import com.xridwan.alquran.data.local.entity.Surah
 
 internal class HistoryPreference(context: Context) {
     companion object {

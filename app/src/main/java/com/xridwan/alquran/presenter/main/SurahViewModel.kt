@@ -3,35 +3,34 @@ package com.xridwan.alquran.presenter.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.xridwan.alquran.data.source.remote.network.ApiClient
-import com.xridwan.alquran.data.source.remote.network.WebService
-import com.xridwan.alquran.data.source.remote.response.SurahResponse
+import com.xridwan.alquran.data.remote.network.ApiService
+import com.xridwan.alquran.data.remote.response.SurahResponse
 import com.xridwan.alquran.utils.Resource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SurahViewModel(
-    private val webService: WebService
+    private val apiService: ApiService
 ) : ViewModel() {
-    private val surahData = MutableLiveData<Resource<SurahResponse>>()
 
-    fun setSurah() {
-        surahData.postValue(Resource.loading(null))
-        webService.getSurah().enqueue(object : Callback<SurahResponse> {
+    private val _surahData = MutableLiveData<Resource<SurahResponse>>()
+    val surahData: LiveData<Resource<SurahResponse>> get() = _surahData
+
+    fun getSurah() {
+        _surahData.postValue(Resource.loading(null))
+        apiService.getSurah().enqueue(object : Callback<SurahResponse> {
             override fun onResponse(call: Call<SurahResponse>, response: Response<SurahResponse>) {
                 if (response.isSuccessful) {
-                    surahData.postValue(Resource.success(response.body()))
+                    _surahData.postValue(Resource.success(response.body()))
                 } else {
-                    surahData.postValue(Resource.error(null, response.message()))
+                    _surahData.postValue(Resource.error(null, response.message()))
                 }
             }
 
             override fun onFailure(call: Call<SurahResponse>, t: Throwable) {
-                surahData.postValue(Resource.error(null, t.localizedMessage))
+                _surahData.postValue(Resource.error(null, t.localizedMessage))
             }
         })
     }
-
-    fun getSurah(): LiveData<Resource<SurahResponse>> = surahData
 }

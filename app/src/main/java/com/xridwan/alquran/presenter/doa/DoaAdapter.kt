@@ -8,7 +8,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.xridwan.alquran.R
-import com.xridwan.alquran.data.source.remote.response.DataItem
+import com.xridwan.alquran.data.remote.response.DataItem
 import com.xridwan.alquran.databinding.DoaItemLayoutBinding
 import java.util.*
 import kotlin.collections.ArrayList

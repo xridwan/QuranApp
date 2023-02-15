@@ -1,4 +1,4 @@
-package com.xridwan.alquran.data.source.local.entity
+package com.xridwan.alquran.data.local.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,4 +1,4 @@
-package com.xridwan.alquran.data.source.remote.response
+package com.xridwan.alquran.data.remote.response
 
 data class Response(
     val result: Result

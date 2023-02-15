@@ -2,6 +2,7 @@ package com.xridwan.alquran
 
 import android.app.Application
 import com.xridwan.alquran.di.networkModule
+import com.xridwan.alquran.di.repositoryModule
 import com.xridwan.alquran.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -17,6 +18,7 @@ class MainApp : Application() {
             modules(
                 listOf(
                     networkModule,
+                    repositoryModule,
                     viewModelModule
                 )
             )
