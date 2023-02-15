@@ -1,4 +1,4 @@
-# quran-app 1.1.1
+# quran-app
 Data from Rest API, Retrofit, KOIN, Shared Preference, MVVM Pattern
 
 - Update Gradle
