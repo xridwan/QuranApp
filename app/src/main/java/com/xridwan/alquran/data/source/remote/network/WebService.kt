@@ -2,7 +2,7 @@ package com.xridwan.alquran.data.source.remote.network
 
 import com.xridwan.alquran.data.source.remote.response.Response
 import com.xridwan.alquran.data.source.remote.response.SurahResponse
-import com.xridwan.alquran.utils.Config.Companion.BASE_URL_DOA
+import com.xridwan.alquran.utils.Config.BASE_URL_DOA
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
