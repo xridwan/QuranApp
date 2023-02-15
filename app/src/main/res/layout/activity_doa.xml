@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     android:background="@color/colorPrimaryDark"
-    tools:context=".ui.view.DoaActivity">
+    tools:context=".presenter.doa.DoaActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_doa"

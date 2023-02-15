@@ -1,4 +1,4 @@
-package com.xridwan.alquran.ui.view
+package com.xridwan.alquran.presenter.main
 
 import android.app.AlertDialog
 import android.app.SearchManager
@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xridwan.alquran.R
 import com.xridwan.alquran.data.source.local.entity.Surah
 import com.xridwan.alquran.data.source.local.preference.HistoryPreference
-import com.xridwan.alquran.data.viewmodel.SurahViewModel
 import com.xridwan.alquran.databinding.ActivityMainBinding
-import com.xridwan.alquran.ui.adapter.SurahAdapter
+import com.xridwan.alquran.presenter.detail.DetailActivity
+import com.xridwan.alquran.presenter.doa.DoaActivity
 import com.xridwan.alquran.utils.Resource
 
 class MainActivity : AppCompatActivity() {
@@ -116,11 +116,11 @@ class MainActivity : AppCompatActivity() {
         surahViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
-        ).get(SurahViewModel::class.java)
+        )[SurahViewModel::class.java]
     }
 
     private fun getViewModel() {
-        surahViewModel.getSurah().observe(this, { state ->
+        surahViewModel.getSurah().observe(this) { state ->
             when (state.status) {
                 Resource.Status.SUCCESS -> {
                     onLoading(false)
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
 
         surahViewModel.setSurah()
     }

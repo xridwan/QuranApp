@@ -1,4 +1,4 @@
-package com.xridwan.alquran.data.viewmodel
+package com.xridwan.alquran.presenter.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,25 +10,25 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SurahViewModel : ViewModel() {
-    private val surahData = MutableLiveData<Resource<SurahResponse>>()
+class DetailViewModel : ViewModel() {
+    private val ayatData = MutableLiveData<Resource<SurahResponse>>()
 
-    fun setSurah() {
-        surahData.postValue(Resource.loading(null))
-        ApiClient.getRetrofit().getSurah().enqueue(object : Callback<SurahResponse> {
+    fun setDetail(nomor: String) {
+        ayatData.postValue(Resource.loading(null))
+        ApiClient.getRetrofit().getAyat(nomor).enqueue(object : Callback<SurahResponse> {
             override fun onResponse(call: Call<SurahResponse>, response: Response<SurahResponse>) {
                 if (response.isSuccessful) {
-                    surahData.postValue(Resource.success(response.body()))
+                    ayatData.postValue(Resource.success(response.body()))
                 } else {
-                    surahData.postValue(Resource.error(null, response.message()))
+                    ayatData.postValue(Resource.error(null, response.message()))
                 }
             }
 
             override fun onFailure(call: Call<SurahResponse>, t: Throwable) {
-                surahData.postValue(Resource.error(null, t.localizedMessage))
+                ayatData.postValue(Resource.error(null, t.localizedMessage))
             }
         })
     }
 
-    fun getSurah(): LiveData<Resource<SurahResponse>> = surahData
+    fun getDetail(): LiveData<Resource<SurahResponse>> = ayatData
 }

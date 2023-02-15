@@ -1,4 +1,4 @@
-package com.xridwan.alquran.ui.view
+package com.xridwan.alquran.presenter.detail
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xridwan.alquran.data.source.local.entity.Surah
 import com.xridwan.alquran.data.source.local.preference.HistoryPreference
-import com.xridwan.alquran.data.viewmodel.DetailViewModel
 import com.xridwan.alquran.databinding.ActivityDetailBinding
-import com.xridwan.alquran.ui.adapter.DetailAdapter
 import com.xridwan.alquran.utils.Resource
 
 class DetailActivity : AppCompatActivity() {
@@ -126,11 +124,11 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
-        ).get(DetailViewModel::class.java)
+        )[DetailViewModel::class.java]
     }
 
     private fun getViewModel() {
-        detailViewModel.getDetail().observe(this, { state ->
+        detailViewModel.getDetail().observe(this) { state ->
             when (state.status) {
                 Resource.Status.SUCCESS -> {
                     onLoading(false)
@@ -144,7 +142,7 @@ class DetailActivity : AppCompatActivity() {
                     Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
     }
 
     private fun onLoading(state: Boolean) {
@@ -153,7 +151,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

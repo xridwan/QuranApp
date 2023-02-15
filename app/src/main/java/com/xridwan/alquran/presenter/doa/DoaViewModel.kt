@@ -1,4 +1,4 @@
-package com.xridwan.alquran.data.viewmodel
+package com.xridwan.alquran.presenter.doa
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

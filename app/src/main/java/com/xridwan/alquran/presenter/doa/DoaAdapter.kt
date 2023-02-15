@@ -1,4 +1,4 @@
-package com.xridwan.alquran.ui.adapter
+package com.xridwan.alquran.presenter.doa
 
 import android.view.LayoutInflater
 import android.view.View

@@ -19,7 +19,7 @@ internal class HistoryPreference(context: Context) {
 
     fun setHistory(value: Surah) {
         val editor = preference.edit().apply {
-            putInt(INDEX, value.index!!)
+            putInt(INDEX, value.index ?: 0)
             putString(NOMOR, value.nomor)
             putString(NAMA, value.nama)
             putString(AYAT, value.ayat)

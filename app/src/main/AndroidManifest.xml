@@ -13,13 +13,13 @@
         android:theme="@style/Theme.Alquran"
         tools:targetApi="31">
         <activity
-            android:name=".ui.view.DoaActivity"
+            android:name=".presenter.doa.DoaActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.DetailActivity"
+            android:name=".presenter.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.MainActivity"
+            android:name=".presenter.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

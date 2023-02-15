@@ -1,4 +1,4 @@
-package com.xridwan.alquran.ui.view
+package com.xridwan.alquran.presenter.doa
 
 import android.app.SearchManager
 import android.content.Context
@@ -11,9 +11,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xridwan.alquran.R
-import com.xridwan.alquran.data.viewmodel.DoaViewModel
 import com.xridwan.alquran.databinding.ActivityDoaBinding
-import com.xridwan.alquran.ui.adapter.DoaAdapter
 import com.xridwan.alquran.utils.Resource
 
 class DoaActivity : AppCompatActivity() {
@@ -52,11 +50,11 @@ class DoaActivity : AppCompatActivity() {
         doaViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
-        ).get(DoaViewModel::class.java)
+        )[DoaViewModel::class.java]
     }
 
     private fun getViewModel() {
-        doaViewModel.getDoa().observe(this, { state ->
+        doaViewModel.getDoa().observe(this) { state ->
             when (state.status) {
                 Resource.Status.SUCCESS -> {
                     onLoading(false)
@@ -70,7 +68,7 @@ class DoaActivity : AppCompatActivity() {
                     Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
 
         doaViewModel.setDoa()
     }
@@ -109,7 +107,7 @@ class DoaActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

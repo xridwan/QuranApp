@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:padding="18dp"
-    tools:context=".ui.view.MainActivity">
+    tools:context=".presenter.main.MainActivity">
 
     <LinearLayout
         android:id="@+id/line_1"
