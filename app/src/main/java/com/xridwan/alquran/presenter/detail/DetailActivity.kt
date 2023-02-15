@@ -8,17 +8,18 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xridwan.alquran.data.source.local.entity.Surah
 import com.xridwan.alquran.data.source.local.preference.HistoryPreference
 import com.xridwan.alquran.databinding.ActivityDetailBinding
 import com.xridwan.alquran.utils.Resource
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailViewModel: DetailViewModel
+    private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var detailAdapter: DetailAdapter
     private lateinit var data: Surah
 
@@ -61,7 +62,6 @@ class DetailActivity : AppCompatActivity() {
             tvAyat.text = "${data.ayat} Ayat"
         }
 
-        setupViewModel()
         detailViewModel.setDetail(data.nomor.toString())
         getViewModel()
         recyclerView()
@@ -118,13 +118,6 @@ class DetailActivity : AppCompatActivity() {
 
         Log.e(TAG, "onDestroy: ${Surah(intPosition)}")
         Toast.makeText(this, "Menyimpan", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun setupViewModel() {
-        detailViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[DetailViewModel::class.java]
     }
 
     private fun getViewModel() {

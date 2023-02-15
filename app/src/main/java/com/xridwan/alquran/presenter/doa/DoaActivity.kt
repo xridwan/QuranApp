@@ -8,15 +8,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xridwan.alquran.R
 import com.xridwan.alquran.databinding.ActivityDoaBinding
 import com.xridwan.alquran.utils.Resource
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DoaActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityDoaBinding
-    private lateinit var doaViewModel: DoaViewModel
+    private val doaViewModel: DoaViewModel by viewModel()
     private lateinit var doaAdapter: DoaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,6 @@ class DoaActivity : AppCompatActivity() {
         }
 
         recyclerView()
-        setupViewModel()
         getViewModel()
     }
 
@@ -44,13 +44,6 @@ class DoaActivity : AppCompatActivity() {
             rvDoa.setHasFixedSize(true)
             rvDoa.adapter = doaAdapter
         }
-    }
-
-    private fun setupViewModel() {
-        doaViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[DoaViewModel::class.java]
     }
 
     private fun getViewModel() {

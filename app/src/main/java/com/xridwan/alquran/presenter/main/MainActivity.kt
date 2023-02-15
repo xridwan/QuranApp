@@ -20,10 +20,11 @@ import com.xridwan.alquran.databinding.ActivityMainBinding
 import com.xridwan.alquran.presenter.detail.DetailActivity
 import com.xridwan.alquran.presenter.doa.DoaActivity
 import com.xridwan.alquran.utils.Resource
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var surahViewModel: SurahViewModel
+    private val surahViewModel: SurahViewModel by viewModel()
     private lateinit var surahAdapter: SurahAdapter
 
     private var index: Int = 0
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
         getHistory()
         recyclerView()
-        setupViewModel()
         getViewModel()
     }
 
@@ -110,13 +110,6 @@ class MainActivity : AppCompatActivity() {
             )
         )
         startActivity(intent)
-    }
-
-    private fun setupViewModel() {
-        surahViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[SurahViewModel::class.java]
     }
 
     private fun getViewModel() {

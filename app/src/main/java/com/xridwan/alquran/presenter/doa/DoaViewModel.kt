@@ -4,18 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.xridwan.alquran.data.source.remote.network.ApiClient
+import com.xridwan.alquran.data.source.remote.network.WebService
 import com.xridwan.alquran.data.source.remote.response.Response
 import com.xridwan.alquran.data.source.remote.response.Result
 import com.xridwan.alquran.utils.Resource
 import retrofit2.Call
 import retrofit2.Callback
 
-class DoaViewModel : ViewModel() {
+class DoaViewModel(
+    private val webService: WebService
+) : ViewModel() {
     private val doaData = MutableLiveData<Resource<Result>>()
 
     fun setDoa() {
         doaData.postValue(Resource.loading(null))
-        ApiClient.getRetrofit().getDoa().enqueue(object : Callback<Response> {
+        webService.getDoa().enqueue(object : Callback<Response> {
             override fun onResponse(call: Call<Response>, response: retrofit2.Response<Response>) {
                 if (response.isSuccessful) {
                     val data = response.body()?.result?.data
