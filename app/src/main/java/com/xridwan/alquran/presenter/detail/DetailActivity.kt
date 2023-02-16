@@ -53,7 +53,7 @@ class DetailActivity : AppCompatActivity() {
             tvAyat.text = "${data.ayat} Ayat"
         }
 
-        getViewModel(data.nomor.toString())
+        getData(data.nomor.toString())
         recyclerView()
     }
 
@@ -98,7 +98,7 @@ class DetailActivity : AppCompatActivity() {
         showToast("Berhasil menambahkan")
     }
 
-    private fun getViewModel(nomor: String) {
+    private fun getData(nomor: String) {
         viewModel.ayat(nomor.toInt()).observe(this) { state ->
             when (state) {
                 is Resource.Success -> {

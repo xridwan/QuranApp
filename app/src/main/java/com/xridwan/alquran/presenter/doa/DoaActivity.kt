@@ -33,7 +33,7 @@ class DoaActivity : AppCompatActivity() {
         }
 
         recyclerView()
-        getViewModel()
+        getData()
     }
 
     private fun recyclerView() {
@@ -47,7 +47,7 @@ class DoaActivity : AppCompatActivity() {
         }
     }
 
-    private fun getViewModel() {
+    private fun getData() {
         doaViewModel.doa().observe(this) { state ->
             when (state) {
                 is Resource.Success -> {

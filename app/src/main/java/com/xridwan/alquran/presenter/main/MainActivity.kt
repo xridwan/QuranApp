@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         getHistory()
         recyclerView()
-        getViewModel()
+        getData()
     }
 
     override fun onResume() {
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             tvHistorySurah.show()
             tvNext.show()
             tvHistorySurah.text = "${history.nama} : ${history.last}"
-            index = history.index!!
+            index = history.index ?: 0
 
             tvNext.setOnClickListener {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun getViewModel() {
+    private fun getData() {
         viewModel.surat().observe(this) { state ->
             when (state) {
                 is Resource.Success -> {

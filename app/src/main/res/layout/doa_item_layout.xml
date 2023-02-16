@@ -11,14 +11,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
-        android:text="Title"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/tv_asma"
@@ -27,14 +27,14 @@
         android:layout_marginTop="8dp"
         android:lineSpacingExtra="10dp"
         android:padding="16dp"
-        android:text="Asma"
         android:textAlignment="viewEnd"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        tools:text="Asma" />
 
     <TextView
         android:id="@+id/tv_arti"
@@ -42,18 +42,18 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="5dp"
         android:padding="6dp"
-        android:text="Arti"
         android:textAlignment="viewStart"
         android:textColor="@color/colorGray"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_asma" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_asma"
+        tools:text="Arti" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:background="@color/colorGray"
         app:layout_constraintTop_toBottomOf="@id/tv_arti"
         tools:layout_editor_absoluteX="0dp" />
