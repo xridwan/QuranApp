@@ -6,3 +6,4 @@ Ver. 1.1.1
 - Update Project Structure
 - Update Library Version
 - Add DI (Dependency Injection) KOIN
+- Add Repository, Clean Architecture

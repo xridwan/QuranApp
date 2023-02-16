@@ -1,9 +1,7 @@
 package com.xridwan.alquran
 
 import android.app.Application
-import com.xridwan.alquran.di.networkModule
-import com.xridwan.alquran.di.repositoryModule
-import com.xridwan.alquran.di.viewModelModule
+import com.xridwan.alquran.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -18,8 +16,12 @@ class MainApp : Application() {
             modules(
                 listOf(
                     networkModule,
+                    dataSourceModule,
                     repositoryModule,
-                    viewModelModule
+                    useCaseModule,
+                    viewModelModule,
+                    prefsModule,
+                    databaseModule
                 )
             )
         }

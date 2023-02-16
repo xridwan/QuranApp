@@ -5,5 +5,6 @@
     <string name="dialog_yes">Ya</string>
     <string name="dialog_cancel">Batal</string>
     <string name="dialog_message">Bersihkan riwayat baca ?</string>
+    <string name="dialog_save">Simpan sebagai bacaan terakhir ?</string>
     <string name="dialog_title">Konfirmasi</string>
 </resources>

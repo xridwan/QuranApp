@@ -1,4 +1,4 @@
-package com.xridwan.alquran.data.local.entity
+package com.xridwan.alquran.data.preference
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -14,5 +14,5 @@ data class Surah(
     var nomor: String? = "",
     var ar: String? = "",
     var id: String? = "",
-    var last: String? = "",
+    var last: Int? = 0,
 ) : Parcelable

@@ -7,25 +7,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xridwan.alquran.R
-import com.xridwan.alquran.data.local.entity.Surah
-import com.xridwan.alquran.data.local.preference.HistoryPreference
+import com.xridwan.alquran.data.preference.Surah
 import com.xridwan.alquran.databinding.ActivityMainBinding
+import com.xridwan.alquran.domain.Resource
+import com.xridwan.alquran.domain.model.Surat
 import com.xridwan.alquran.presenter.detail.DetailActivity
 import com.xridwan.alquran.presenter.doa.DoaActivity
-import com.xridwan.alquran.utils.Resource
+import com.xridwan.alquran.utils.Constants.DATA_1
+import com.xridwan.alquran.utils.Constants.DATA_2
+import com.xridwan.alquran.utils.Constants.EXTRA_DATA
+import com.xridwan.alquran.utils.Constants.EXTRA_DATA_1
+import com.xridwan.alquran.utils.Constants.EXTRA_DATA_2
+import com.xridwan.alquran.utils.hide
+import com.xridwan.alquran.utils.show
+import com.xridwan.alquran.utils.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val surahViewModel: SurahViewModel by viewModel()
-    private lateinit var surahAdapter: SurahAdapter
 
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel: SurahViewModel by viewModel()
+    private lateinit var surahAdapter: SurahAdapter
     private var index: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,41 +45,37 @@ class MainActivity : AppCompatActivity() {
         getViewModel()
     }
 
-    override fun onRestart() {
-        super.onRestart()
+    override fun onResume() {
+        super.onResume()
         getHistory()
     }
 
     private fun getHistory() {
-        val preference = HistoryPreference(this)
-        val history = preference.getHistory()
-        if (history.nama.toString().isNotEmpty()) {
+        val history = viewModel.mPrefs.getHistory()
+        if (history.nama.toString().isNotEmpty()) setContent(history)
+        else {
             binding.apply {
-                setForm()
-                tvHistorySurah.text = "${history.nama} : ${history.last}"
-                index = history.index!!
-
-                tvNext.setOnClickListener {
-                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_DATA, DetailActivity.DATA_1)
-                    intent.putExtra("DATA_1", history)
-                    startActivity(intent)
-                }
-            }
-        } else {
-            binding.apply {
-                tvTitle.visibility = View.GONE
-                tvHistorySurah.visibility = View.GONE
-                tvNext.visibility = View.GONE
+                tvTitle.hide()
+                tvHistorySurah.hide()
+                tvNext.hide()
             }
         }
     }
 
-    private fun setForm() {
+    private fun setContent(history: Surah) {
         binding.apply {
-            tvTitle.visibility = View.VISIBLE
-            tvHistorySurah.visibility = View.VISIBLE
-            tvNext.visibility = View.VISIBLE
+            tvTitle.show()
+            tvHistorySurah.show()
+            tvNext.show()
+            tvHistorySurah.text = "${history.nama} : ${history.last}"
+            index = history.index!!
+
+            tvNext.setOnClickListener {
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra(EXTRA_DATA, DATA_1)
+                intent.putExtra(EXTRA_DATA_1, history)
+                startActivity(intent)
+            }
         }
     }
 
@@ -87,23 +89,23 @@ class MainActivity : AppCompatActivity() {
             rvSurah.adapter = surahAdapter
 
             surahAdapter.setOnItemClickCallback(object : SurahAdapter.OnItemClickCallback {
-                override fun onItemClicked(data: Surah) {
+                override fun onItemClicked(data: Surat) {
                     selectedItem(data)
                 }
             })
         }
     }
 
-    private fun selectedItem(data: Surah) {
+    private fun selectedItem(data: Surat) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.EXTRA_DATA, DetailActivity.DATA_2)
+        intent.putExtra(EXTRA_DATA, DATA_2)
         intent.putExtra(
-            "DATA_2",
+            EXTRA_DATA_2,
             Surah(
                 index = 0,
                 arti = data.arti,
                 nama = data.nama,
-                ayat = data.ayat,
+                ayat = data.ayat.toString(),
                 type = data.type,
                 nomor = data.nomor
             )
@@ -112,19 +114,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getViewModel() {
-        surahViewModel.getSurah()
-        surahViewModel.surahData.observe(this) { state ->
-            when (state.status) {
-                Resource.Status.SUCCESS -> {
+        viewModel.surat().observe(this) { state ->
+            when (state) {
+                is Resource.Success -> {
                     onLoading(false)
-                    state.data?.let { it -> surahAdapter.setData(it) }
+                    state.data?.let { it -> surahAdapter.setData(it as MutableList<Surat>) }
                 }
-                Resource.Status.LOADING -> {
+                is Resource.Loading -> {
                     onLoading(true)
                 }
-                Resource.Status.ERROR -> {
+                is Resource.Error -> {
                     onLoading(false)
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showToast(state.message)
                 }
             }
         }
@@ -168,12 +169,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun resetDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.apply {
-            setTitle(getString(R.string.dialog_title))
-            setMessage(getString(R.string.dialog_message))
-            setPositiveButton(getString(R.string.dialog_yes)) { _, _ ->
-                val historyPreference = HistoryPreference(this@MainActivity)
-                historyPreference.setHistory(
+        builder.setTitle(getString(R.string.dialog_title))
+            .setMessage(getString(R.string.dialog_message))
+            .setPositiveButton(getString(R.string.dialog_yes)) { _, _ ->
+                viewModel.mPrefs.setHistory(
                     Surah(
                         0,
                         "",
@@ -184,23 +183,21 @@ class MainActivity : AppCompatActivity() {
                         "",
                         "",
                         "",
-                        ""
+                        0
                     )
                 )
                 getHistory()
-
-                Toast.makeText(this@MainActivity, "Berhasil Dibersihkan", Toast.LENGTH_SHORT).show()
+                showToast("Berhasil dibersihkan")
             }
-            setNegativeButton(getString(R.string.dialog_cancel)) { dialog, _ ->
+            .setNegativeButton(getString(R.string.dialog_cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
-            setCancelable(false)
-            show()
-        }
+            .setCancelable(false)
+            .show()
     }
 
     private fun onLoading(state: Boolean) {
-        if (state) binding.progressSurah.visibility = View.VISIBLE
-        else binding.progressSurah.visibility = View.GONE
+        if (state) binding.progressSurah.show()
+        else binding.progressSurah.hide()
     }
 }

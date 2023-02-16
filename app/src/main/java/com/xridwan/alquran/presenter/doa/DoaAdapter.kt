@@ -1,17 +1,14 @@
 package com.xridwan.alquran.presenter.doa
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.xridwan.alquran.R
 import com.xridwan.alquran.data.remote.response.DataItem
 import com.xridwan.alquran.databinding.DoaItemLayoutBinding
 import java.util.*
-import kotlin.collections.ArrayList
 
 class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable {
     private val doaList = arrayListOf<DataItem>()
@@ -28,8 +25,8 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
         notifyDataSetChanged()
     }
 
-    class DoaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = DoaItemLayoutBinding.bind(itemView)
+    class DoaViewHolder(private val binding: DoaItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(dataItem: DataItem) {
             with(binding) {
                 tvTitle.text = dataItem.title
@@ -40,9 +37,9 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoaViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.doa_item_layout, parent, false)
-        return DoaViewHolder(view)
+        val binding =
+            DoaItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DoaViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DoaViewHolder, position: Int) {

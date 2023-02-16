@@ -1,35 +1,34 @@
 package com.xridwan.alquran.presenter.detail
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.xridwan.alquran.data.local.entity.Surah
-import com.xridwan.alquran.data.local.preference.HistoryPreference
+import com.xridwan.alquran.R
+import com.xridwan.alquran.data.preference.Surah
 import com.xridwan.alquran.databinding.ActivityDetailBinding
-import com.xridwan.alquran.utils.Resource
+import com.xridwan.alquran.domain.Resource
+import com.xridwan.alquran.domain.model.Ayat
+import com.xridwan.alquran.utils.Constants.DATA_1
+import com.xridwan.alquran.utils.Constants.DATA_2
+import com.xridwan.alquran.utils.Constants.EXTRA_DATA
+import com.xridwan.alquran.utils.Constants.EXTRA_DATA_1
+import com.xridwan.alquran.utils.Constants.EXTRA_DATA_2
+import com.xridwan.alquran.utils.parcelable
+import com.xridwan.alquran.utils.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
-    private val detailViewModel: DetailViewModel by viewModel()
+    private val viewModel: DetailViewModel by viewModel()
     private lateinit var detailAdapter: DetailAdapter
     private lateinit var data: Surah
-
     private var intPosition: Int = 0
-
-    companion object {
-        const val EXTRA_DATA = "extra_data"
-        const val DATA_1 = 1
-        const val DATA_2 = 2
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,17 +36,9 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         when (intent.getIntExtra(EXTRA_DATA, 0)) {
-            DATA_1 -> {
-                data = intent.getParcelableExtra<Surah>("DATA_1") as Surah
-                Log.e(TAG, "main: ${data.index}")
-            }
-            DATA_2 -> {
-                data = intent.getParcelableExtra<Surah>("DATA_2") as Surah
-                Log.e(TAG, "adapter: ${data.index}")
-            }
+            DATA_1 -> data = intent.parcelable<Surah>(EXTRA_DATA_1) as Surah
+            DATA_2 -> data = intent.parcelable<Surah>(EXTRA_DATA_2) as Surah
         }
-
-        Log.e(TAG, "onCreate: ${data.nama}")
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -62,8 +53,7 @@ class DetailActivity : AppCompatActivity() {
             tvAyat.text = "${data.ayat} Ayat"
         }
 
-        detailViewModel.getDetail(data.nomor.toString())
-        getViewModel()
+        getViewModel(data.nomor.toString())
         recyclerView()
     }
 
@@ -77,15 +67,6 @@ class DetailActivity : AppCompatActivity() {
             rvAyat.setHasFixedSize(true)
             rvAyat.adapter = detailAdapter
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                intPosition = data.index!!
-                rvAyat.scrollToPosition(intPosition)
-
-                Log.e(TAG, "onCreate: $intPosition")
-
-                Toast.makeText(this@DetailActivity, "Berhasil Memuat", Toast.LENGTH_SHORT).show()
-            }, 2000L)
-
             rvAyat.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
@@ -96,15 +77,14 @@ class DetailActivity : AppCompatActivity() {
             detailAdapter.setOnItemClickCallback(object : DetailAdapter.OnItemClickCallback {
                 override fun onItemClicked(position: Int) {
                     Log.e(TAG, "onItemClicked: $position")
-                    selectedItem(position)
+                    saveDialog(position)
                 }
             })
         }
     }
 
     private fun selectedItem(position: Int) {
-        val historyPreference = HistoryPreference(this)
-        historyPreference.setHistory(
+        viewModel.mPrefs.setHistory(
             Surah(
                 index = position,
                 nomor = data.nomor,
@@ -112,30 +92,47 @@ class DetailActivity : AppCompatActivity() {
                 arti = data.arti,
                 ayat = data.ayat,
                 type = data.type,
-                last = "${position + 1}"
+                last = position + 1
             )
         )
-
-        Log.e(TAG, "onDestroy: ${Surah(intPosition)}")
-        Toast.makeText(this, "Menyimpan", Toast.LENGTH_SHORT).show()
+        showToast("Berhasil menambahkan")
     }
 
-    private fun getViewModel() {
-        detailViewModel.ayatData.observe(this) { state ->
-            when (state.status) {
-                Resource.Status.SUCCESS -> {
+    private fun getViewModel(nomor: String) {
+        viewModel.ayat(nomor.toInt()).observe(this) { state ->
+            when (state) {
+                is Resource.Success -> {
                     onLoading(false)
-                    state.data?.let { it -> detailAdapter.setData(it) }
+                    state.data?.let { it -> detailAdapter.setData(it as MutableList<Ayat>) }
+                    intPosition = data.index ?: 0
+                    if (intPosition != 0) {
+                        binding.rvAyat.scrollToPosition(intPosition)
+                        showToast("Berhasil Memuat")
+                    }
                 }
-                Resource.Status.LOADING -> {
+                is Resource.Loading -> {
                     onLoading(true)
                 }
-                Resource.Status.ERROR -> {
+                is Resource.Error -> {
                     onLoading(false)
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showToast(state.message)
                 }
             }
         }
+    }
+
+    private fun saveDialog(position: Int) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.dialog_title))
+            .setMessage(getString(R.string.dialog_save))
+            .setPositiveButton(getString(R.string.dialog_yes)) { _, _ ->
+                selectedItem(position)
+            }
+            .setNegativeButton(getString(R.string.dialog_cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
     }
 
     private fun onLoading(state: Boolean) {

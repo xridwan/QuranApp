@@ -5,13 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xridwan.alquran.R
 import com.xridwan.alquran.databinding.ActivityDoaBinding
-import com.xridwan.alquran.utils.Resource
+import com.xridwan.alquran.utils.Status
+import com.xridwan.alquran.utils.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DoaActivity : AppCompatActivity() {
@@ -50,16 +50,16 @@ class DoaActivity : AppCompatActivity() {
         doaViewModel.getDoa()
         doaViewModel.doaData.observe(this) { state ->
             when (state.status) {
-                Resource.Status.SUCCESS -> {
+                Status.SUCCESS -> {
                     onLoading(false)
                     state?.data?.data?.let { it -> doaAdapter.setData(it) }
                 }
-                Resource.Status.LOADING -> {
+                Status.LOADING -> {
                     onLoading(true)
                 }
-                Resource.Status.ERROR -> {
+                Status.ERROR -> {
                     onLoading(false)
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showToast(state.message)
                 }
             }
         }

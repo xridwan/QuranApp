@@ -1,23 +1,20 @@
 package com.xridwan.alquran.presenter.main
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.xridwan.alquran.R
-import com.xridwan.alquran.data.local.entity.Surah
 import com.xridwan.alquran.databinding.SurahItemLayoutBinding
+import com.xridwan.alquran.domain.model.Surat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filterable {
-    private val surahList = arrayListOf<Surah>()
+    private val surahList = arrayListOf<Surat>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    var filterList = ArrayList<Surah>()
+    var filterList = ArrayList<Surat>()
 
     init {
         filterList = surahList
@@ -27,32 +24,32 @@ class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filte
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setData(list: MutableList<Surah>) {
+    fun setData(list: MutableList<Surat>) {
         surahList.clear()
         surahList.addAll(list)
         notifyDataSetChanged()
     }
 
-    inner class SurahViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = SurahItemLayoutBinding.bind(itemView)
-        fun bind(surah: Surah) {
+    inner class SurahViewHolder(private val binding: SurahItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(surat: Surat) {
             with(binding) {
-                tvNomor.text = surah.nomor
-                tvTitle.text = surah.nama
-                tvAsma.text = surah.asma
-                tvType.text = surah.type
+                tvNomor.text = surat.nomor
+                tvTitle.text = surat.nama
+                tvAsma.text = surat.asma
+                tvType.text = "${surat.type} - ${surat.ayat} Ayat"
 
                 itemView.setOnClickListener {
-                    onItemClickCallback.onItemClicked(surah)
+                    onItemClickCallback.onItemClicked(surat)
                 }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurahViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.surah_item_layout, parent, false)
-        return SurahViewHolder(view)
+        val binding =
+            SurahItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SurahViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SurahViewHolder, position: Int) {
@@ -65,7 +62,7 @@ class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filte
     override fun getItemCount(): Int = filterList.size
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Surah)
+        fun onItemClicked(data: Surat)
     }
 
     override fun getFilter(): Filter {
@@ -75,7 +72,7 @@ class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filte
                 filterList = if (search.isEmpty()) {
                     surahList
                 } else {
-                    val results = ArrayList<Surah>()
+                    val results = ArrayList<Surat>()
                     for (row in surahList) {
                         if (row.nama?.toLowerCase(Locale.getDefault())
                                 ?.contains(
@@ -93,7 +90,7 @@ class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filte
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filterList = results?.values as ArrayList<Surah>
+                filterList = results?.values as ArrayList<Surat>
                 notifyDataSetChanged()
             }
         }
