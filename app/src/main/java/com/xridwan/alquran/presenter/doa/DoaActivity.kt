@@ -10,7 +10,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xridwan.alquran.R
 import com.xridwan.alquran.databinding.ActivityDoaBinding
-import com.xridwan.alquran.utils.Status
+import com.xridwan.alquran.domain.Resource
+import com.xridwan.alquran.domain.model.Doa
 import com.xridwan.alquran.utils.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -47,17 +48,16 @@ class DoaActivity : AppCompatActivity() {
     }
 
     private fun getViewModel() {
-        doaViewModel.getDoa()
-        doaViewModel.doaData.observe(this) { state ->
-            when (state.status) {
-                Status.SUCCESS -> {
+        doaViewModel.doa().observe(this) { state ->
+            when (state) {
+                is Resource.Success -> {
                     onLoading(false)
-                    state?.data?.data?.let { it -> doaAdapter.setData(it) }
+                    state.data?.let { it -> doaAdapter.setData(it as MutableList<Doa>) }
                 }
-                Status.LOADING -> {
+                is Resource.Loading -> {
                     onLoading(true)
                 }
-                Status.ERROR -> {
+                is Resource.Error -> {
                     onLoading(false)
                     showToast(state.message)
                 }

@@ -1,22 +1,15 @@
 package com.xridwan.alquran.di
 
-import androidx.viewbinding.BuildConfig
+import com.xridwan.alquran.BuildConfig
 import com.xridwan.alquran.data.QuranRepositoryImpl
 import com.xridwan.alquran.data.local.LocalDataSource
-import com.xridwan.alquran.data.preference.HistoryPreference
 import com.xridwan.alquran.data.remote.RemoteDataSource
 import com.xridwan.alquran.data.remote.network.ApiService
 import com.xridwan.alquran.domain.repository.QuranRepository
 import com.xridwan.alquran.domain.usecase.QuranUseCase
 import com.xridwan.alquran.domain.usecase.QuranUseCaseImpl
-import com.xridwan.alquran.presenter.detail.DetailViewModel
-import com.xridwan.alquran.presenter.doa.DoaViewModel
-import com.xridwan.alquran.presenter.main.SurahViewModel
-import com.xridwan.alquran.utils.Config
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -36,7 +29,7 @@ val networkModule = module {
     }
     single {
         Retrofit.Builder()
-            .baseUrl(Config.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

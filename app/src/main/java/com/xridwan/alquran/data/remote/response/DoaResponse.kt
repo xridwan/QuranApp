@@ -1,16 +1,13 @@
 package com.xridwan.alquran.data.remote.response
 
-data class Response(
-    val result: Result
-)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class DataItem(
-    val arabic: String,
-    val translation: String,
+@Parcelize
+data class DoaResponse(
+    val id: String,
+    val doa: String,
+    val ayat: String,
     val latin: String,
-    val title: String
-)
-
-data class Result(
-    val data: ArrayList<DataItem>
-)
+    val artinya: String,
+) : Parcelable

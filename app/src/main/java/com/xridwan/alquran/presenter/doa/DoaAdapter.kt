@@ -6,20 +6,21 @@ import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.xridwan.alquran.data.remote.response.DataItem
+import com.xridwan.alquran.data.remote.response.DoaResponse
 import com.xridwan.alquran.databinding.DoaItemLayoutBinding
+import com.xridwan.alquran.domain.model.Doa
 import java.util.*
 
 class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable {
-    private val doaList = arrayListOf<DataItem>()
+    private val doaList = arrayListOf<Doa>()
 
-    var filterList = ArrayList<DataItem>()
+    var filterList = ArrayList<Doa>()
 
     init {
         filterList = doaList
     }
 
-    fun setData(list: MutableList<DataItem>) {
+    fun setData(list: MutableList<Doa>) {
         doaList.clear()
         doaList.addAll(list)
         notifyDataSetChanged()
@@ -27,11 +28,11 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
 
     class DoaViewHolder(private val binding: DoaItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(dataItem: DataItem) {
+        fun bind(dataItem: Doa) {
             with(binding) {
-                tvTitle.text = dataItem.title
-                tvAsma.text = dataItem.arabic
-                tvArti.text = dataItem.translation
+                tvTitle.text = dataItem.doa
+                tvAsma.text = dataItem.ayat
+                tvArti.text = dataItem.artinya
             }
         }
     }
@@ -58,12 +59,12 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
                 filterList = if (search.isEmpty()) {
                     doaList
                 } else {
-                    val results = ArrayList<DataItem>()
+                    val results = ArrayList<Doa>()
                     for (row in doaList) {
-                        if (row.title.toLowerCase(Locale.getDefault())
-                                .contains(
+                        if (row.doa?.toLowerCase(Locale.getDefault())
+                                ?.contains(
                                     constraint.toString().toLowerCase(Locale.getDefault())
-                                )
+                                ) == true
                         ) {
                             results.add(row)
                         }
@@ -76,7 +77,7 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filterList = results?.values as ArrayList<DataItem>
+                filterList = results?.values as ArrayList<Doa>
                 notifyDataSetChanged()
             }
         }

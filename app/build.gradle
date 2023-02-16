@@ -16,6 +16,9 @@ android {
         versionCode 111
         versionName "1.1.1"
 
+        buildConfigField "String", "BASE_URL", '"https://api.npoint.io/99c279bb173a6e28359c/"'
+        buildConfigField "String", "BASE_URL_DOA", '"https://doa-doa-api-ahmadramadhan.fly.dev/api"'
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

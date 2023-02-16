@@ -1,5 +1,6 @@
 package com.xridwan.alquran.data.local
 
+import com.xridwan.alquran.data.local.entity.DoaEntity
 import com.xridwan.alquran.data.local.entity.SuratEntity
 import com.xridwan.alquran.data.local.room.QuranDao
 import com.xridwan.data.source.local.entity.AyatEntity
@@ -15,4 +16,8 @@ class LocalDataSource(
     fun getAyat(id: Int): Flow<List<AyatEntity>> = quranDao.getAyat(id)
 
     suspend fun insertAyat(ayatList: List<AyatEntity>) = quranDao.insertAyat(ayatList)
+
+    fun getDoa(): Flow<List<DoaEntity>> = quranDao.getDoa()
+
+    suspend fun insertDoa(doaList: List<DoaEntity>) = quranDao.insertDoa(doaList)
 }

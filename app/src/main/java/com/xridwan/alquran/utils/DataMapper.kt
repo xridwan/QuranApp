@@ -1,9 +1,12 @@
 package com.xridwan.alquran.utils
 
+import com.xridwan.alquran.data.local.entity.DoaEntity
 import com.xridwan.alquran.data.local.entity.SuratEntity
 import com.xridwan.alquran.data.remote.response.AyatReponse
+import com.xridwan.alquran.data.remote.response.DoaResponse
 import com.xridwan.alquran.data.remote.response.SuratResponse
 import com.xridwan.alquran.domain.model.Ayat
+import com.xridwan.alquran.domain.model.Doa
 import com.xridwan.alquran.domain.model.Surat
 import com.xridwan.data.source.local.entity.AyatEntity
 
@@ -70,6 +73,32 @@ object DataMapper {
                 id = it.id,
                 tr = it.tr,
                 nomor = it.nomor
+            )
+        }
+
+    fun mapDoaResponseToEntities(input: List<DoaResponse>): List<DoaEntity> {
+        val doaList = ArrayList<DoaEntity>()
+        input.map {
+            val surat = DoaEntity(
+                id = it.id.toInt(),
+                doa = it.doa,
+                ayat = it.ayat,
+                latin = it.latin,
+                artinya = it.artinya
+            )
+            doaList.add(surat)
+        }
+        return doaList
+    }
+
+    fun mapDoaEntitiesToDomain(input: List<DoaEntity>): List<Doa> =
+        input.map {
+            Doa(
+                id = it.id ?: 0,
+                doa = it.doa,
+                ayat = it.ayat,
+                latin = it.latin,
+                artinya = it.artinya
             )
         }
 }

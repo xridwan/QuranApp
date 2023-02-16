@@ -4,9 +4,11 @@ import com.xridwan.alquran.data.local.LocalDataSource
 import com.xridwan.alquran.data.remote.RemoteDataSource
 import com.xridwan.alquran.data.remote.network.ApiResponse
 import com.xridwan.alquran.data.remote.response.AyatReponse
+import com.xridwan.alquran.data.remote.response.DoaResponse
 import com.xridwan.alquran.data.remote.response.SuratResponse
 import com.xridwan.alquran.domain.Resource
 import com.xridwan.alquran.domain.model.Ayat
+import com.xridwan.alquran.domain.model.Doa
 import com.xridwan.alquran.domain.model.Surat
 import com.xridwan.alquran.domain.repository.QuranRepository
 import com.xridwan.alquran.utils.DataMapper
@@ -59,6 +61,28 @@ class QuranRepositoryImpl(
             override suspend fun saveCallResult(data: List<AyatReponse>) {
                 val ayatList = DataMapper.mapAyatResponseToEntities(data, id)
                 localDataSource.insertAyat(ayatList)
+            }
+        }.asFlow()
+
+    override fun getDoa(): Flow<Resource<List<Doa>>> =
+        object : NetworkBoundResource<List<Doa>, List<DoaResponse>>() {
+            override fun loadFromDB(): Flow<List<Doa>> {
+                return localDataSource.getDoa().map {
+                    DataMapper.mapDoaEntitiesToDomain(it)
+                }
+            }
+
+            override fun shouldFetch(data: List<Doa>?): Boolean {
+                return data.isNullOrEmpty()
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<List<DoaResponse>>> {
+                return remoteDataSource.getDoa()
+            }
+
+            override suspend fun saveCallResult(data: List<DoaResponse>) {
+                val suratList = DataMapper.mapDoaResponseToEntities(data)
+                localDataSource.insertDoa(suratList)
             }
         }.asFlow()
 }
