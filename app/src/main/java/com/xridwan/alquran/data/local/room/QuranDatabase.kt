@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.xridwan.alquran.data.local.entity.DoaEntity
 import com.xridwan.alquran.data.local.entity.SuratEntity
-import com.xridwan.data.source.local.entity.AyatEntity
+import com.xridwan.alquran.data.local.entity.AyatEntity
 
 @Database(
     entities = [

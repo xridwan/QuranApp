@@ -1,4 +1,4 @@
-package com.xridwan.data.source.local.entity
+package com.xridwan.alquran.data.local.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

@@ -8,7 +8,7 @@ import com.xridwan.alquran.data.remote.response.SuratResponse
 import com.xridwan.alquran.domain.model.Ayat
 import com.xridwan.alquran.domain.model.Doa
 import com.xridwan.alquran.domain.model.Surat
-import com.xridwan.data.source.local.entity.AyatEntity
+import com.xridwan.alquran.data.local.entity.AyatEntity
 
 object DataMapper {
     fun mapSuratResponseToEntities(input: List<SuratResponse>): List<SuratEntity> {

@@ -1,4 +1,4 @@
-# quran-app
+# Quran App
 Data from Rest API, Retrofit, KOIN, Shared Preference, MVVM Pattern
 
 Ver. 1.1.1

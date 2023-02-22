@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.xridwan.alquran.data.local.entity.DoaEntity
 import com.xridwan.alquran.data.local.entity.SuratEntity
-import com.xridwan.data.source.local.entity.AyatEntity
+import com.xridwan.alquran.data.local.entity.AyatEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
