@@ -74,9 +74,9 @@ class SurahAdapter : RecyclerView.Adapter<SurahAdapter.SurahViewHolder>(), Filte
                 } else {
                     val results = ArrayList<Surat>()
                     for (row in surahList) {
-                        if (row.nama?.toLowerCase(Locale.getDefault())
+                        if (row.nama?.lowercase(Locale.getDefault())
                                 ?.contains(
-                                    constraint.toString().toLowerCase(Locale.getDefault())
+                                    constraint.toString().lowercase(Locale.getDefault())
                                 ) == true
                         ) {
                             results.add(row)

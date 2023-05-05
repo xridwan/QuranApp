@@ -61,9 +61,9 @@ class DoaAdapter : RecyclerView.Adapter<DoaAdapter.DoaViewHolder>(), Filterable 
                 } else {
                     val results = ArrayList<Doa>()
                     for (row in doaList) {
-                        if (row.doa?.toLowerCase(Locale.getDefault())
+                        if (row.doa?.lowercase(Locale.getDefault())
                                 ?.contains(
-                                    constraint.toString().toLowerCase(Locale.getDefault())
+                                    constraint.toString().lowercase(Locale.getDefault())
                                 ) == true
                         ) {
                             results.add(row)

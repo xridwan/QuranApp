@@ -7,4 +7,13 @@ object Constants {
     const val DATA_1 = 1
     const val DATA_2 = 2
     const val DATABASE_NAME = "quran_db"
+
+    const val PREFS_NAME = "prefs_history_pref"
+    const val PREFS_INDEX = "prefs_index"
+    const val PREFS_NOMOR = "prefs_nomor"
+    const val PREFS_NAMA = "prefs_nama"
+    const val PREFS_AYAT = "prefs_ayat"
+    const val PREFS_ARTI = "prefs_arti"
+    const val PREFS_TYPE = "prefs_type"
+    const val PREFS_LAST = "prefs_last"
 }

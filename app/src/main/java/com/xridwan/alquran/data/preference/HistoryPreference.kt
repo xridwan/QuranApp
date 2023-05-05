@@ -2,6 +2,14 @@ package com.xridwan.alquran.data.preference
 
 import android.app.Application
 import android.content.Context
+import com.xridwan.alquran.utils.Constants.PREFS_ARTI
+import com.xridwan.alquran.utils.Constants.PREFS_AYAT
+import com.xridwan.alquran.utils.Constants.PREFS_INDEX
+import com.xridwan.alquran.utils.Constants.PREFS_LAST
+import com.xridwan.alquran.utils.Constants.PREFS_NAMA
+import com.xridwan.alquran.utils.Constants.PREFS_NAME
+import com.xridwan.alquran.utils.Constants.PREFS_NOMOR
+import com.xridwan.alquran.utils.Constants.PREFS_TYPE
 
 class HistoryPreference(application: Application) {
 
@@ -32,16 +40,5 @@ class HistoryPreference(application: Application) {
             last = preference.getInt(PREFS_LAST, 0)
         }
         return history
-    }
-
-    companion object {
-        private const val PREFS_NAME = "prefs_history_pref"
-        private const val PREFS_INDEX = "prefs_index"
-        private const val PREFS_NOMOR = "prefs_nomor"
-        private const val PREFS_NAMA = "prefs_nama"
-        private const val PREFS_AYAT = "prefs_ayat"
-        private const val PREFS_ARTI = "prefs_arti"
-        private const val PREFS_TYPE = "prefs_type"
-        private const val PREFS_LAST = "prefs_last"
     }
 }
