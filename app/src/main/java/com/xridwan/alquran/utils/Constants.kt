@@ -16,4 +16,8 @@ object Constants {
     const val PREFS_ARTI = "prefs_arti"
     const val PREFS_TYPE = "prefs_type"
     const val PREFS_LAST = "prefs_last"
+
+    const val CONN_TIMEOUT = 120L
+    const val READ_TIMEOUT = 120L
+    const val WRITE_TIMEOUT = 120L
 }

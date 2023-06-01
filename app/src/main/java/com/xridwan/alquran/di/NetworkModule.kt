@@ -8,6 +8,7 @@ import com.xridwan.alquran.data.remote.network.ApiService
 import com.xridwan.alquran.domain.repository.QuranRepository
 import com.xridwan.alquran.domain.usecase.QuranUseCase
 import com.xridwan.alquran.domain.usecase.QuranUseCaseImpl
+import com.xridwan.alquran.utils.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -22,9 +23,9 @@ val networkModule = module {
             else HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
         OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
+            .connectTimeout(Constants.CONN_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true).build()
     }
     single {
